@@ -3,38 +3,44 @@ import 'package:movieapp_checkpoint4/models/movie_model.dart';
 import 'package:movieapp_checkpoint4/widgets/custom_card_thumbnail.dart';
 
 class NowPlayingList extends StatefulWidget {
-  final List<Movie> movies;
-  const NowPlayingList({super.key, required this.movies});
+  final Result result;
+  const NowPlayingList({super.key, required this.result});
 
   @override
   State<NowPlayingList> createState() => _NowPlayingListState();
 }
 
 class _NowPlayingListState extends State<NowPlayingList> {
-  final PageController _pageController =
-      PageController(initialPage: 0, viewportFraction: 0.9);
+  final PageController _pageController = PageController(viewportFraction: 0.9);
+
   int currentPage = 0;
+  final maxItems = 5;
 
   @override
   Widget build(BuildContext context) {
+    final totalItems = widget.result.movies.length;
+
     return Column(
       children: [
         SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (int page) {
-                setState(() {
-                  currentPage = page;
-                });
-              },
-              itemCount: widget.movies.length,
-              itemBuilder: (context, index) {
-                return CustomCardThumbnail(
-                  imageAsset: widget.movies[index].posterPath,
-                );
-              },
-            )),
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: PageView.builder(
+            physics: const ClampingScrollPhysics(),
+            controller: _pageController,
+            itemCount: totalItems,
+            itemBuilder: (context, index) {
+              final imgUrl = widget.result.movies[index].posterPath;
+              return CustomCardThumbnail(
+                imageAsset: imgUrl,
+              );
+            },
+            onPageChanged: (int page) {
+              setState(() {
+                currentPage = page;
+              });
+            },
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: _buildPageIndicators(),
@@ -44,11 +50,15 @@ class _NowPlayingListState extends State<NowPlayingList> {
   }
 
   List<Widget> _buildPageIndicators() {
-    List<Widget> indicators = [];
-    for (int i = 0; i < widget.movies.length; i++) {
-      indicators.add(_buildIndicator(i == currentPage));
+    final totalItems = widget.result.movies.length;
+    final int to = totalItems;
+
+    List<Widget> list = [];
+    for (int i = 0; i < to; i++) {
+      list.add(
+          i == currentPage ? _buildIndicator(true) : _buildIndicator(false));
     }
-    return indicators;
+    return list;
   }
 
   Widget _buildIndicator(bool isActive) {

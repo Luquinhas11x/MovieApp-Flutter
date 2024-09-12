@@ -14,10 +14,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ApiServices apiServices = ApiServices();
   late Future<Result> nowPlayingMovies;
+  late Future<Result> popularMovies;
+  late Future<Result> upcomingMovies;
 
   @override
   void initState() {
-    nowPlayingMovies = apiServices.getPopularMovies();
+    popularMovies = apiServices.getPopularMovies();
+    nowPlayingMovies = apiServices.getNowPlayingMovies();
+    upcomingMovies = apiServices.getUpcomingMovies();
     super.initState();
   }
 
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     if (snapshot.hasData) {
-                      return NowPlayingList(movies: snapshot.data!.movies);
+                      return NowPlayingList(result: snapshot.data!);
                     }
                     return const Center(
                       child: Text('No data found'),
@@ -78,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder(
-                  future: nowPlayingMovies,
+                  future: popularMovies,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -91,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     return MoviesHorizontalList(
-                      movies: snapshot.data!.movies,
+                      result: snapshot.data!,
                     );
                   }),
               const Padding(
@@ -106,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder(
-                  future: nowPlayingMovies,
+                  future: upcomingMovies,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -119,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     return MoviesHorizontalList(
-                      movies: snapshot.data!.movies,
+                      result: snapshot.data!,
                     );
                   }),
               const SizedBox(
