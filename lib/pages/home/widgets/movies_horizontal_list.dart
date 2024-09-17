@@ -3,8 +3,8 @@ import 'package:movieapp_checkpoint4/models/movie_model.dart';
 import 'package:movieapp_checkpoint4/pages/home/widgets/movie_horizontal_item.dart';
 
 class MoviesHorizontalList extends StatelessWidget {
-  final Result result;
-  const MoviesHorizontalList({super.key, required this.result});
+  final List<Movie> movies;
+  const MoviesHorizontalList({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,9 @@ class MoviesHorizontalList extends StatelessWidget {
       height: 230,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: result.movies.length,
+        itemCount: movies.length,
         itemBuilder: (context, index) {
-          final movie = result.movies[index];
-          return MovieHorizontalItem(movie: movie);
+          return MovieHorizontalItem(movie: movies[index]);
         },
       ),
     );

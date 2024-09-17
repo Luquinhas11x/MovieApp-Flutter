@@ -1,46 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp_checkpoint4/models/movie_model.dart';
+import 'package:movieapp_checkpoint4/pages/movie_detail/movie_detail.dart';
 import 'package:movieapp_checkpoint4/widgets/custom_card_thumbnail.dart';
 
 class NowPlayingList extends StatefulWidget {
-  final Result result;
-  const NowPlayingList({super.key, required this.result});
+  final List<Movie> movies;
+  const NowPlayingList({super.key, required this.movies});
 
   @override
   State<NowPlayingList> createState() => _NowPlayingListState();
 }
 
 class _NowPlayingListState extends State<NowPlayingList> {
-  final PageController _pageController = PageController(viewportFraction: 0.9);
-
+  final PageController _pageController =
+      PageController(initialPage: 0, viewportFraction: 0.9);
   int currentPage = 0;
   final maxItems = 5;
 
   @override
   Widget build(BuildContext context) {
-    final totalItems = widget.result.movies.length;
-
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.5,
-          child: PageView.builder(
-            physics: const ClampingScrollPhysics(),
-            controller: _pageController,
-            itemCount: totalItems,
-            itemBuilder: (context, index) {
-              final imgUrl = widget.result.movies[index].posterPath;
-              return CustomCardThumbnail(
-                imageAsset: imgUrl,
-              );
-            },
-            onPageChanged: (int page) {
-              setState(() {
-                currentPage = page;
-              });
-            },
-          ),
-        ),
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (int page) {
+                setState(() {
+                  currentPage = page;
+                });
+              },
+              itemCount: widget.movies.length > maxItems
+                  ? maxItems
+                  : widget.movies.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MovieDetailPage(
+                              movieId: widget.movies[index].id,
+                            )));
+                  },
+                  child: CustomCardThumbnail(
+                    imageAsset: widget.movies[index].posterPath,
+                  ),
+                );
+              },
+            )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: _buildPageIndicators(),
@@ -50,8 +56,8 @@ class _NowPlayingListState extends State<NowPlayingList> {
   }
 
   List<Widget> _buildPageIndicators() {
-    final totalItems = widget.result.movies.length;
-    final int to = totalItems;
+    final totalItems = widget.movies.length;
+    final int to = totalItems > maxItems ? maxItems : totalItems;
 
     List<Widget> list = [];
     for (int i = 0; i < to; i++) {

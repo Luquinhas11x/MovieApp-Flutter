@@ -13,15 +13,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ApiServices apiServices = ApiServices();
-  late Future<Result> nowPlayingMovies;
-  late Future<Result> popularMovies;
-  late Future<Result> upcomingMovies;
+  late Future<Result> popular;
+  late Future<Result> nowPlaying;
+  late Future<Result> upcoming;
 
   @override
   void initState() {
-    popularMovies = apiServices.getPopularMovies();
-    nowPlayingMovies = apiServices.getNowPlayingMovies();
-    upcomingMovies = apiServices.getUpcomingMovies();
+    popular = apiServices.getPopularMovies();
+    nowPlaying = apiServices.getNowPlayingMovies();
+    upcoming = apiServices.getUpcomingMovies();
     super.initState();
   }
 
@@ -47,8 +47,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              FutureBuilder<Result>(
-                  future: nowPlayingMovies,
+              FutureBuilder(
+                  future: nowPlaying,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     if (snapshot.hasData) {
-                      return NowPlayingList(result: snapshot.data!);
+                      return NowPlayingList(movies: snapshot.data!.movies);
                     }
                     return const Center(
                       child: Text('No data found'),
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder(
-                  future: popularMovies,
+                  future: popular,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     return MoviesHorizontalList(
-                      result: snapshot.data!,
+                      movies: snapshot.data!.movies,
                     );
                   }),
               const Padding(
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder(
-                  future: upcomingMovies,
+                  future: upcoming,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     return MoviesHorizontalList(
-                      result: snapshot.data!,
+                      movies: snapshot.data!.movies,
                     );
                   }),
               const SizedBox(
