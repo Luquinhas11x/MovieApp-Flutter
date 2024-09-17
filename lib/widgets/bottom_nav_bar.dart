@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp_checkpoint4/pages/actor/actor_page.dart';
 import 'package:movieapp_checkpoint4/pages/home/home_page.dart';
-import 'package:movieapp_checkpoint4/pages/search/search_page.dart';
 import 'package:movieapp_checkpoint4/pages/top_rated/top_rated_page.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -28,7 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           },
           children: const [
             HomePage(),
-            SearchPage(),
+            ActorPage(),
             TopRatedPage(),
           ],
         ),
@@ -37,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           iconSize: 30,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+            BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Actor'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.trending_up), label: 'Top Rated'),
           ],
