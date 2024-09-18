@@ -51,8 +51,11 @@ class _HomePageState extends State<HomePage> {
                   future: nowPlaying,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     }
                     if (snapshot.hasError) {
@@ -85,8 +88,11 @@ class _HomePageState extends State<HomePage> {
                   future: popular,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     }
                     if (snapshot.hasError) {
@@ -113,8 +119,11 @@ class _HomePageState extends State<HomePage> {
                   future: upcoming,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     }
                     if (snapshot.hasError) {
