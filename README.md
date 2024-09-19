@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 ## Participantes 
 - 95338 - Lucas Santana de Paula
 - 93152 - Gabriel Oliveira Toledo
-- 95633 - JOSÃ‰ VICTOR DOS SANTOS FILHO
+- 95633 - JOSÉ VICTOR DOS SANTOS FILHO
