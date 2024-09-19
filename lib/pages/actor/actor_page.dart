@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movieapp_checkpoint4/models/movie_model.dart';
-import 'package:movieapp_checkpoint4/pages/top_rated/widgets/top_rated_movie.dart';
+import 'package:movieapp_checkpoint4/models/actor_model.dart';
+import 'package:movieapp_checkpoint4/pages/actor/widgets/actor_card.dart';
 import 'package:movieapp_checkpoint4/services/api_services.dart';
 
 class ActorPage extends StatefulWidget {
@@ -12,11 +12,11 @@ class ActorPage extends StatefulWidget {
 
 class _ActorPAgePageState extends State<ActorPage> {
   ApiServices apiServices = ApiServices();
-  late Future<Result> moviesFuture;
+  late Future<ResultsActor> actorsFuture;
 
   @override
   void initState() {
-    moviesFuture = apiServices.getTopRatedMovies();
+    actorsFuture = apiServices.getActorsList();
     super.initState();
   }
 
@@ -24,10 +24,10 @@ class _ActorPAgePageState extends State<ActorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Top Rated Movies'),
+        title: const Text('Actors'),
       ),
-      body: FutureBuilder<Result>(
-          future: moviesFuture,
+      body: FutureBuilder<ResultsActor>(
+          future: actorsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -41,9 +41,9 @@ class _ActorPAgePageState extends State<ActorPage> {
             }
             if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data!.movies.length,
+                itemCount: snapshot.data!.results.length,
                 itemBuilder: (context, index) {
-                  return TopRatedMovie(movie: snapshot.data!.movies[index]);
+                  return ActorCard(actor: snapshot.data!.results[index]);
                 },
               );
             }
