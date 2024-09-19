@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 class ActorDetailModel {
@@ -36,21 +35,21 @@ class ActorDetailModel {
   factory ActorDetailModel.fromRawJson(String str) =>
       ActorDetailModel.fromJson(json.decode(str));
 
-  factory ActorDetailModel.fromJson(Map<String, dynamic> json) => ActorDetailModel(
-    adult: json['adult'] ?? false,
-    alsoKnownAs: json['also_known_as'].cast<String>() ?? '',
-    biography: json['biography'] ?? '',
-    birthday: json['birthday'] ?? '',
-    deathday: json['deathday'] ?? '',
-    gender: json['gender'] ?? 0,
-    homepage: json['homepage'] ?? '',
-    id: json['id'] ?? 0,
-    imdbId: json['imdb_id'] ?? '',
-    knownForDepartment: json['known_for_department'] ?? '',
-    name: json['name'] ?? '',
-    placeOfBirth: json['place_of_birth'] ?? '',
-    popularity: json['popularity'] ?? '',
-    profilePath: json['profile_path'] ?? '',
-  );
-
+  factory ActorDetailModel.fromJson(Map<String, dynamic> json) =>
+      ActorDetailModel(
+        adult: json['adult'] ?? false,
+        alsoKnownAs: json['also_known_as'].cast<String>() ?? '',
+        biography: json['biography'] ?? '',
+        birthday: json['birthday'] ?? '',
+        deathday: json['deathday'],
+        gender: json['gender'] ?? 0,
+        homepage: json['homepage'],
+        id: json['id'] ?? 0,
+        imdbId: json['imdb_id'] ?? '',
+        knownForDepartment: json['known_for_department'] ?? '',
+        name: json['name'] ?? '',
+        placeOfBirth: json['place_of_birth'] ?? '',
+        popularity: json['popularity'] ?? '',
+        profilePath: json['profile_path'] ?? '',
+      );
 }
