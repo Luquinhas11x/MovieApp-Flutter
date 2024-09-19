@@ -64,6 +64,11 @@ class ActorCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
+                      const Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                        size: 15,
+                      ),
                       const SizedBox(
                         height: 5,
                       ),
